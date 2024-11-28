@@ -125,9 +125,12 @@ checkStructure(const string &structure, const vector<int> &set, const BinaryOp &
     bool isMulComm = op2 && isCommutative(set, op2);
 
     cout << "Checking " << structure << ":\n";
-    if (structure == "monoid") {
+    if (structure == "monoid" || structure == "abelian monoid") {
         cout << "  Associativity: " << (isAssoc ? "Yes" : "No") << "\n";
         cout << "  Neutral Element: " << (neutral != -1 ? "Yes" : "No") << "\n";
+        if(structure == "abelian monoid") {
+            cout << "  Commutativity: " << (isComm ? "Yes" : "No") << "\n";
+        }
     } else if (structure == "group") {
         cout << "  Associativity: " << (isAssoc ? "Yes" : "No") << "\n";
         cout << "  Neutral Element: " << (neutral != -1 ? "Yes" : "No") << "\n";
@@ -186,18 +189,21 @@ int main() {
                 checkStructure("monoid", set, op1);
                 break;
             case 2:
-                checkStructure("group", set, op1);
+                checkStructure("abelian monoid", set, op1);
                 break;
             case 3:
-                checkStructure("abelian group", set, op1);
+                checkStructure("group", set, op1);
                 break;
             case 4:
-                checkStructure("ring", set, op1, op2);
+                checkStructure("abelian group", set, op1);
                 break;
             case 5:
-                checkStructure("commutative ring", set, op1, op2);
+                checkStructure("ring", set, op1, op2);
                 break;
             case 6:
+                checkStructure("commutative ring", set, op1, op2);
+                break;
+            case 7:
                 checkStructure("field", set, op1, op2);
                 break;
             default:
@@ -206,5 +212,6 @@ int main() {
     } else {
         cout << "Invalid choice!\n";
     }
+    system("pause");
     return 0;
 }
